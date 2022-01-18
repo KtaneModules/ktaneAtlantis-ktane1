@@ -551,11 +551,13 @@ public class guraModScript : MonoBehaviour
         }
     }
   
-
-    /*Force Solve Handler
     IEnumerator TwitchHandleForcedSolve()
     {
-        yield return null;
+        while (!moduleSolved)
+        {
+            if (!evilMode) { buttons[correctButton].OnInteract(); yield return null; buttons[correctButton].OnInteractEnded(); }
+            else { evilButtons[evilCorrectButton].OnInteract(); yield return null; }
+        }
     }
-    */
+
 }
