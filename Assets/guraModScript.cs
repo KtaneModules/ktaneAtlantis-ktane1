@@ -76,6 +76,7 @@ public class guraModScript : MonoBehaviour
     void evilStart()
     {
         StringBuilder sb = new StringBuilder();
+        chosenWords = new string[] { "αντιο", "ομικρον", "ημερολογιο", "ασχημοσ", "δεκεμβριοσ", "δακτυλο", "ξι", "πι" };
         for (int i = 0; i < chosenWords.Length; i++)
         {
             chosenWords[i] = greekWordList.words[UnityEngine.Random.Range(0, greekWordList.words.Count())];
@@ -127,6 +128,7 @@ public class guraModScript : MonoBehaviour
     void evilSolutionFinder()
     {
         StringBuilder sb = new StringBuilder();
+        //StringBuilder sb2 = new StringBuilder();
         int start = bomb.GetSerialNumberNumbers().Sum() % 9 == 0 ? 8 : bomb.GetSerialNumberNumbers().Sum() % 9 - 1;//Digital root
         centerlog = start;
         int funcNo = 0;
@@ -201,15 +203,19 @@ public class guraModScript : MonoBehaviour
                             offset = 2 * h;
                             break;
                     }
-                    sb.Append(greekAlphabet[(greekAlphabet.IndexOf(shiftedStrings[i][j]) + offset + 24) % 24]);
+                    sb.Append(greekAlphabet[(greekAlphabet.IndexOf(chosenWords[i][j]) + offset + 24) % 24]);
                     if (sb[j] == 'α')
                     {
                         alphas[h]++;
                     }
                 }
+                //sb2.Append(sb.ToString());
+                //sb2.Append(" ");
                 shiftedStrings[i] = sb.ToString();
                 sb.Remove(0, sb.Length);
             }
+            //Debug.Log(h.ToString() + ", " + sb2.ToString());
+            //sb2.Remove(0, sb2.Length);
         }
         int valueY = alphas.Max();
         int valueX = alphas.IndexOf(valueY);
