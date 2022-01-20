@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ModConfig
   m_EditorClassIdentifier: 
   id: atlantis
-  title: The Atlantis
+  title: Atlantis
   author: ktane1
   description: 'A module dedicated to Gawr Gura.
 
@@ -21,7 +21,7 @@ MonoBehaviour:
 
     Mod ID: atlantis
 
-    Manual Link: TBA'
-  version: v1.2
+    Manual Link: https://ktane.timwi.de/HTML/The%20Atlantis.html'
+  version: v1.3
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 086b85a98da21fa44892950c5e204be1, type: 3}
