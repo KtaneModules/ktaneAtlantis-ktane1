@@ -76,7 +76,6 @@ public class guraModScript : MonoBehaviour
     void evilStart()
     {
         StringBuilder sb = new StringBuilder();
-        chosenWords = new string[] { "αντιο", "ομικρον", "ημερολογιο", "ασχημοσ", "δεκεμβριοσ", "δακτυλο", "ξι", "πι" };
         for (int i = 0; i < chosenWords.Length; i++)
         {
             chosenWords[i] = greekWordList.words[UnityEngine.Random.Range(0, greekWordList.words.Count())];
