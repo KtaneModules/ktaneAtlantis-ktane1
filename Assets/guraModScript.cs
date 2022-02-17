@@ -67,10 +67,10 @@ public class guraModScript : MonoBehaviour
             if (i == 7) { sb.AppendFormat("{0}", chosenWords[i]); }
             else { sb.AppendFormat("{0}, ", chosenWords[i]); }            
         }
-        Debug.LogFormat("[The Atlantis #{0}] The words are {1}.", moduleId, sb.ToString());
+        Debug.LogFormat("[Atlantis #{0}] The words are {1}.", moduleId, sb.ToString());
         chosenButton = UnityEngine.Random.Range(0, buttons.Count());
         trident.localEulerAngles = new Vector3(0f, chosenButton * 45f, 0f);
-        Debug.LogFormat("[The Atlantis #{0}] The trident is pointing to button #{1}, counting from north.", moduleId, chosenButton);
+        Debug.LogFormat("[Atlantis #{0}] The trident is pointing to button #{1}, counting from north.", moduleId, chosenButton);
     }
 
     void evilStart()
@@ -116,10 +116,10 @@ public class guraModScript : MonoBehaviour
         int valueY = alphas.Max();
         int valueX = alphas.IndexOf(valueY) + 1;
         if (valueX == 24) { valueX = 0; }
-        Debug.LogFormat("[The Atlantis #{0}] Value of X is {1}.", moduleId, valueX);
-        Debug.LogFormat("[The Atlantis #{0}] Value of Y is {1}.", moduleId, valueY);
+        Debug.LogFormat("[Atlantis #{0}] Value of X is {1}.", moduleId, valueX);
+        Debug.LogFormat("[Atlantis #{0}] Value of Y is {1}.", moduleId, valueY);
         correctButton = (chosenButton + Math.Abs(valueX - valueY)) % 8;
-        Debug.LogFormat("[The Atlantis #{0}] The correct button is button #{1}, counting from north.", moduleId, correctButton);
+        Debug.LogFormat("[Atlantis #{0}] The correct button is button #{1}, counting from north.", moduleId, correctButton);
         evilStart();//Prepping first to prevent lag
         evilSolutionFinder();
     }
@@ -242,7 +242,7 @@ public class guraModScript : MonoBehaviour
             buttonHeld = false;
             if (holdingTime > 0.3f)
             {
-                Debug.LogFormat("[The Atlantis #{0}] Cruel mode activated, going deeper into the waters...", moduleId);
+                Debug.LogFormat("[Atlantis #{0}] Cruel mode activated, going deeper into the waters...", moduleId);
                 evilMode = true;
                 evilModeLogger();
                 StartCoroutine(moduleFlip());
@@ -250,7 +250,7 @@ public class guraModScript : MonoBehaviour
             else if (k == correctButton)
             {
                 module.HandlePass();
-                Debug.LogFormat("[The Atlantis #{0}] Correct button pressed, module solved.", moduleId);
+                Debug.LogFormat("[Atlantis #{0}] Correct button pressed, module solved.", moduleId);
                 foreach (TextMesh i in words) { i.text = ""; }
                 audio.PlaySoundAtTransform("a", transform);
                 StartCoroutine(solveAnim());
@@ -258,7 +258,7 @@ public class guraModScript : MonoBehaviour
             }
             else
             {
-                Debug.LogFormat("[The Atlantis #{0}] Wrong button pressed (button #{1}), strike.", moduleId, k);
+                Debug.LogFormat("[Atlantis #{0}] Wrong button pressed (button #{1}), strike.", moduleId, k);
                 module.HandleStrike();
                 holdingTime = 0f;
             }
@@ -271,14 +271,14 @@ public class guraModScript : MonoBehaviour
                 module.HandlePass();
                 moduleSolved = true;
                 evilMode = false;
-                Debug.LogFormat("[The Atlantis #{0}] Correct button pressed, module solved. Congrats.", moduleId);
+                Debug.LogFormat("[Atlantis #{0}] Correct button pressed, module solved. Congrats.", moduleId);
                 foreach (TextMesh i in words) { i.text = ""; }
                 StartCoroutine(moduleFlip());
                 StartCoroutine(evilSolveAnim());
             }
             else
             {
-                Debug.LogFormat("[The Atlantis #{0}] Wrong button pressed (button #{1}), strike.", moduleId, k);
+                Debug.LogFormat("[Atlantis #{0}] Wrong button pressed (button #{1}), strike.", moduleId, k);
                 module.HandleStrike();
             }
         }
@@ -289,9 +289,9 @@ public class guraModScript : MonoBehaviour
         string[] functions = new string[] { "X+2", "2X-1", "3X-1", "2X+1", "X", "X-1", "3X", "X+1", "2X" };
         string[] positions = new string[] { "top left", "top middle", "top right", "middle left", "middle right", "bottom left", "bottom middle", "bottom right" };
         int logger = 0;
-        Debug.LogFormat("[The Atlantis #{0}] The words are {1}.", moduleId, evilWordslog);
-        Debug.LogFormat("[The Atlantis #{0}] The trident is pointing to button #{1}, counting from north.", moduleId, tridentDirlog);
-        Debug.LogFormat("[The Atlantis #{0}] The center cell is cell #{1}.", moduleId, centerlog + 1);
+        Debug.LogFormat("[Atlantis #{0}] The words are {1}.", moduleId, evilWordslog);
+        Debug.LogFormat("[Atlantis #{0}] The trident is pointing to button #{1}, counting from north.", moduleId, tridentDirlog);
+        Debug.LogFormat("[Atlantis #{0}] The center cell is cell #{1}.", moduleId, centerlog + 1);
         for (int i = 0; i < 8; i++)
         {
             switch (i)
@@ -321,11 +321,11 @@ public class guraModScript : MonoBehaviour
                     logger = 3 * ((centerlog / 3 + 1) % 3) + (centerlog % 3 + 1) % 3;
                     break;
             }
-            Debug.LogFormat("[The Atlantis #{0}] The {1} button is assigned to function {2}.", moduleId, positions[i], functions[logger]);
+            Debug.LogFormat("[Atlantis #{0}] The {1} button is assigned to function {2}.", moduleId, positions[i], functions[logger]);
         }
-        Debug.LogFormat("[The Atlantis #{0}] Value of X is {1}.", moduleId, xlog);
-        Debug.LogFormat("[The Atlantis #{0}] Value of Y is {1}.", moduleId, ylog);
-        Debug.LogFormat("[The Atlantis #{0}] The correct button is button #{1}, counting from north.", moduleId, evilCorrectButton);
+        Debug.LogFormat("[Atlantis #{0}] Value of X is {1}.", moduleId, xlog);
+        Debug.LogFormat("[Atlantis #{0}] Value of Y is {1}.", moduleId, ylog);
+        Debug.LogFormat("[Atlantis #{0}] The correct button is button #{1}, counting from north.", moduleId, evilCorrectButton);
     }
     IEnumerator moduleFlip()
     {
@@ -456,6 +456,7 @@ public class guraModScript : MonoBehaviour
         command = command.ToLowerInvariant().Trim();
         string[] parameters = command.Split(' ');
         int btn = 0;
+        int TPScore = 12;
         if (Regex.IsMatch(parameters[0], @"^\s*press\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             yield return null;
@@ -512,7 +513,16 @@ public class guraModScript : MonoBehaviour
                         yield return "sendtochaterror Please specify a valid button to press!";
                         yield break;
                 }
-                if (evilMode) { evilButtons[btn].OnInteract(); yield return null; evilButtons[btn].OnInteractEnded();}
+                if (evilMode) 
+                { 
+                    if (btn == evilCorrectButton)
+                    {
+                        yield return "awardpointsonsolve " + TPScore;
+                    }
+                    evilButtons[btn].OnInteract(); 
+                    yield return null; 
+                    evilButtons[btn].OnInteractEnded();
+                }
                 else { buttons[btn].OnInteract(); yield return null; buttons[btn].OnInteractEnded(); }
             }
         }
