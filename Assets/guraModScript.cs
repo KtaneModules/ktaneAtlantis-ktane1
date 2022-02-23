@@ -327,6 +327,7 @@ public class guraModScript : MonoBehaviour
         Debug.LogFormat("[Atlantis #{0}] Value of Y is {1}.", moduleId, ylog);
         Debug.LogFormat("[Atlantis #{0}] The correct button is button #{1}, counting from north.", moduleId, evilCorrectButton);
     }
+
     IEnumerator moduleFlip()
     {
         audio.PlaySoundAtTransform("Flip", transform);
