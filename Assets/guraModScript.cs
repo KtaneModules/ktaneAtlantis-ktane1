@@ -447,7 +447,7 @@ public class guraModScript : MonoBehaviour
         }
     }
 
-    
+    //Twitch Plays
     #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press 0 (Counted from north going clockwise), !{0} press N, !{0} press U to press the top button, !{0} enter to dive deeper into the waters, !{0} text to end the suffering of superzooming to read super small text";
     #pragma warning restore 414
