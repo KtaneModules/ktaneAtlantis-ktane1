@@ -22,6 +22,6 @@ MonoBehaviour:
     Mod ID: atlantis
 
     Manual Link: https://ktane.timwi.de/HTML/Atlantis.html'
-  version: 1.3.4
+  version: 1.3.5
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 086b85a98da21fa44892950c5e204be1, type: 3}

@@ -115,7 +115,7 @@ public class guraModScript : MonoBehaviour
         }
         int valueY = alphas.Max();
         int valueX = alphas.IndexOf(valueY) + 1;
-        if (valueX == 24) { valueX = 0; }
+        if (alphas[23] == alphas[valueX - 1]) { valueX = 0; }
         Debug.LogFormat("[Atlantis #{0}] Value of X is {1}.", moduleId, valueX);
         Debug.LogFormat("[Atlantis #{0}] Value of Y is {1}.", moduleId, valueY);
         correctButton = (chosenButton + Math.Abs(valueX - valueY)) % 8;
