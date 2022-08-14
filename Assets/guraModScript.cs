@@ -21,7 +21,7 @@ public class guraModScript : MonoBehaviour
     public GameObject[] evilButtonAnims;
     public Material[] evilColours;
 
-    public KMSelectable[] evilButtons;
+    public GameObject[] evilButtons;
     public TextMesh[] evilWords;
     public Transform evilTrident;
 
@@ -52,7 +52,7 @@ public class guraModScript : MonoBehaviour
         for (int i = 0; i < evilButtons.Length; i++)
         {
             int j = i;
-            evilButtons[j].OnInteract += () => { buttonHandler(j); return false; };
+            evilButtons[j].GetComponent<KMSelectable>().OnInteract += () => { buttonHandler(j); return false; };
         }
         module.OnActivate += solutionFinder;        
     }
@@ -71,14 +71,31 @@ public class guraModScript : MonoBehaviour
         chosenButton = UnityEngine.Random.Range(0, buttons.Count());
         trident.localEulerAngles = new Vector3(0f, chosenButton * 45f, 0f);
         Debug.LogFormat("[Atlantis #{0}] The trident is pointing to button #{1}, counting from north.", moduleId, chosenButton);
+        foreach (GameObject i in evilButtons)
+        {
+            i.SetActive(false);
+        }
     }
 
     void evilStart()
     {
         StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        var chosenGreekLetters = new HashSet<char>();
+        while (chosenGreekLetters.Count() < 6)
+        {
+            chosenGreekLetters.Add(greekAlphabet[UnityEngine.Random.Range(0, greekAlphabet.Length)]);
+        }
+        var glList = chosenGreekLetters.ToList();
         for (int i = 0; i < chosenWords.Length; i++)
         {
             chosenWords[i] = greekWordList.words[UnityEngine.Random.Range(0, greekWordList.words.Count())];
+            for (int j = 0; j < chosenWords[i].Length; j++)
+            {
+                sb2.Append(glList[UnityEngine.Random.Range(0, glList.Count())]);
+            }
+            chosenWords[i] = sb2.ToString();
+            sb2.Remove(0, sb2.Length);
             evilWords[i].text = chosenWords[i];
             if (i == 7) { sb.AppendFormat("{0}", chosenWords[i]); }
             else { sb.AppendFormat("{0}, ", chosenWords[i]); }
@@ -265,7 +282,7 @@ public class guraModScript : MonoBehaviour
         }
         else
         {
-            evilButtons[k].AddInteractionPunch(0.5f);
+            evilButtons[k].GetComponent<KMSelectable>().AddInteractionPunch(0.5f);
             if (k == evilCorrectButton)
             {
                 module.HandlePass();
@@ -289,7 +306,7 @@ public class guraModScript : MonoBehaviour
         string[] functions = new string[] { "X+2", "2X-1", "3X-1", "2X+1", "X", "X-1", "3X", "X+1", "2X" };
         string[] positions = new string[] { "top left", "top middle", "top right", "middle left", "middle right", "bottom left", "bottom middle", "bottom right" };
         int logger = 0;
-        Debug.LogFormat("[Atlantis #{0}] The words are {1}.", moduleId, evilWordslog);
+        Debug.LogFormat("[Atlantis #{0}] The word strings are {1}.", moduleId, evilWordslog);
         Debug.LogFormat("[Atlantis #{0}] The trident is pointing to button #{1}, counting from north.", moduleId, tridentDirlog);
         Debug.LogFormat("[Atlantis #{0}] The center cell is cell #{1}.", moduleId, centerlog + 1);
         for (int i = 0; i < 8; i++)
@@ -330,6 +347,10 @@ public class guraModScript : MonoBehaviour
 
     IEnumerator moduleFlip()
     {
+        foreach (GameObject i in evilButtons)
+        {
+            i.SetActive(true);
+        }
         audio.PlaySoundAtTransform("Flip", transform);
         if (evilMode) { audio.PlaySoundAtTransform("Submerge", transform); audio.PlaySoundAtTransform("Reflect", transform); } 
         else { audio.PlaySoundAtTransform("Emerge", transform); }
@@ -520,9 +541,9 @@ public class guraModScript : MonoBehaviour
                     {
                         yield return "awardpointsonsolve " + TPScore;
                     }
-                    evilButtons[btn].OnInteract(); 
+                    evilButtons[btn].GetComponent<KMSelectable>().OnInteract(); 
                     yield return null; 
-                    evilButtons[btn].OnInteractEnded();
+                    evilButtons[btn].GetComponent<KMSelectable>().OnInteractEnded();
                 }
                 else { buttons[btn].OnInteract(); yield return null; buttons[btn].OnInteractEnded(); }
             }
@@ -572,7 +593,7 @@ public class guraModScript : MonoBehaviour
         while (!moduleSolved)
         {
             if (!evilMode) { buttons[correctButton].OnInteract(); yield return null; buttons[correctButton].OnInteractEnded(); }
-            else { evilButtons[evilCorrectButton].OnInteract(); yield return null; }
+            else { evilButtons[evilCorrectButton].GetComponent<KMSelectable>().OnInteract(); yield return null; }
         }
     }
 
