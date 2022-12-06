@@ -545,7 +545,7 @@ public class guraModScript : MonoBehaviour
                     yield return null; 
                     evilButtons[btn].GetComponent<KMSelectable>().OnInteractEnded();
                 }
-                else { buttons[btn].OnInteract(); yield return null; buttons[btn].OnInteractEnded(); }
+                else { buttons[btn].OnInteract(); buttons[btn].OnInteractEnded(); }
             }
         }
         else if (Regex.IsMatch(command, @"^\s*enter\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
