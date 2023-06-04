@@ -478,7 +478,7 @@ public class guraModScript : MonoBehaviour
         command = command.ToLowerInvariant().Trim();
         string[] parameters = command.Split(' ');
         int btn = 0;
-        int TPScore = 12;
+        int TPScore = 16;
         if (Regex.IsMatch(parameters[0], @"^\s*press\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             yield return null;
